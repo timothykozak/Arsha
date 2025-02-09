@@ -28,29 +28,7 @@
   <link href="assets/css/main.css" rel="stylesheet">
 
   <!-- These styles are used by the search results.  -->
-  <style>
-      .search-title {
-          font-size: 0.8125rem;
-      }
-      .match {
-          color: #00fdd4;
-      }
-      .match em {
-          font-style: normal;
-      }
-      /* These are inserted by MySearch.php */
-      .search {
-          background-color: rgba(28, 70, 236, 0.44);
-      }
-      .search-list {
-          list-style-type: none;
-      }
-      .search-list-item {
-          padding: 12px 0;
-          margin: 0;
-          border-bottom: 1px solid #dee2e6;
-      }
-  </style>
+  <link href="assets/vendor/MyCCs/MySearch.css" rel="stylesheet">
 
 </head>
 
@@ -107,7 +85,7 @@
 
     <div class="php-email-form">
       <input type="text" id="search_input" placeholder="Enter a keyword" name="s">
-      <button onclick="getResult()">Search</button>
+      <button type="submit" class="search-submit-button" onclick="getResult()">Search</button>
       <p id="search_results">No Search Results</p>
     </div>
   </section><!-- /Starter Section Section -->
@@ -132,7 +110,6 @@
 
 <!-- Vendor JS Files -->
 <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="assets/vendor/php-email-form/validate.js"></script>
 <script src="assets/vendor/aos/aos.js"></script>
 <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
 <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
