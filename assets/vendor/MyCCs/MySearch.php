@@ -64,7 +64,6 @@ if (!isset($_GET['s'])) {
     die('You must define a search term!');
 }
 
-$highlight = true;  // Highlight results or not
 $search_in = array('html', 'htm');  // Allowable filetypes to search in
 $search_dir = '../../../../';  // Starting directory, might be overridden by a passed parameter
 $recursive = true;  // Search subdirectories
@@ -83,10 +82,6 @@ if (isset($_GET['search_dir'])) {
 $search_term = preg_replace('/^\/$/', '"/"', $search_term);
 $search_term = preg_replace('/\+/', ' ', $search_term);
 $search_term_length = strlen($search_term);
-
-if (isset($_GET['liveCount'])){
-    $search_live_count = $_GET['liveCount'];
-}
 
 $final_result = array();
 
@@ -118,8 +113,6 @@ foreach ($files as $file) {
         $found = strpos_recursive(mb_strtolower($clean_content, 'UTF-8'), $search_term);
 
         $final_result[$file_count]['page_title'][] = $page_title[1];
-        //$final_result[$file_count]['file_name'][] = preg_replace("/^.{3}/", "\\1", $file); // TODO Make normal path
-        // $final_result[$file_count]['file_name'][] = preg_replace("/^\.\.\/\./", "\\1", $file);
         $cleanFile = preg_replace("/\.\.\//", "", $file);
         $final_result[$file_count]['file_name'][] = $cleanFile;
     }
@@ -136,23 +129,14 @@ foreach ($files as $file) {
             $side_chars = SIDE_CHARS;
             if ($pos < SIDE_CHARS) {
                 $side_chars = $pos;
-                if (isset($_GET['liveSearch']) and $_GET['liveSearch'] != "") {
-                    $pos_end = SIDE_CHARS + $search_term_length + 15;
-                } else {
-                    $pos_end = SIDE_CHARS * 9 + $search_term_length;
-                }
+                $pos_end = SIDE_CHARS * 9 + $search_term_length;
             } else {
-                if (isset($_GET['liveSearch']) and $_GET['liveSearch'] != "") {
-                    $pos_end = SIDE_CHARS + $search_term_length + 15;
-                } else {
-                    $pos_end = SIDE_CHARS * 9 + $search_term_length;
-                }
+                $pos_end = SIDE_CHARS * 9 + $search_term_length;
             }
 
             $pos_start = $pos - $side_chars;
             $str = substr($clean_content, $pos_start, $pos_end);
             $result = preg_replace('/' . $search_term . '/ui', '<span class="search">\0</span>', $str);
-            //$result = preg_replace('#'.$search_term.'#ui', '<span class="search">'.$search_term.'</span>', $str);
             $final_result[$file_count]['search_result'][] = $result;
 
         }
@@ -174,11 +158,6 @@ if ($file_count > 0) {
 ?>
 
 <div class="search-results">
-
-    <?php if (count($final_result) > 0 and isset($_GET['liveSearch']) and $_GET['liveSearch'] != "") {
-        echo "<div class='search-quick-result'>Quick Results</div>";
-    } ?>
-
     <ol class="search-list">
         <?php
         $sum_of_results = 0;
@@ -187,8 +166,6 @@ if ($file_count > 0) {
             if (!empty($final_result[$i]['search_result'][0]) || $final_result[$i]['search_result'][0] !== '') {
                 $match_count++;
                 $sum_of_results += count($final_result[$i]['search_result']);
-                if (isset($_GET['liveSearch']) and $_GET['liveSearch'] != "" and $i >= $search_live_count) {
-                } else {
                     ?>
                     <li class="search-list-item">
 
@@ -210,27 +187,11 @@ if ($file_count > 0) {
                         echo $template; ?>
                     </li>
                     <?php
-                }
             }
         }
 
         if ($match_count == 0) {
             echo '<li><div class="search-error">No results found for "<span class="search">' . $search_term . '</span>"<div/></li>';
-        }
-        ?>
-        <?php
-        if (isset($_GET['liveSearch']) and $_GET['liveSearch'] != "" and $match_count != 0) {
-            ?>
-            <li class="search-list-item-all">
-                <a href='search-results.html?s=<?php echo $_GET['s']; ?>&amp;filter=<?php echo $search_filter_init; ?>'  class="search-submit">
-                    <?php
-                    echo "See other ";
-                    echo $sum_of_results;
-                    echo $sum_of_results < 2 ? " result on " : " results";
-                    ?>
-                </a>
-            </li>
-            <?php
         }
         ?>
     </ol>
@@ -262,7 +223,7 @@ function list_files($dir)
     return $result;
 }
 
-//returns the extention of a file
+//returns the extension of a file
 function get_file_extension($filename)
 {
     $result = '';
