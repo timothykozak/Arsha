@@ -6,6 +6,9 @@
 // It passes a template that is updated with information
 // for each file found.  Otherwise it returns No Search
 // Results.
+//
+// Please note that the searchDir is relative to the
+// location of MySearch.php.
 
 function getResult() {
 
@@ -16,7 +19,8 @@ function getResult() {
   let request = new URLSearchParams({s: searchString});
   let handler = './assets/vendor/MyCCs/MySearch.php';
   let filter = '*.html';
-  let searchDir = '../../..'
+  let searchDir = '../../..';   // Need to go up three directories to get to the root
+                                      // because of the location of MySearch.php
   let template = `<h5 class="search-title"><a target="_top" href="#{href}" class="search-link">#{title}</a></h5>
                         <p>...#{token}...</p>
                         <p class="match"><em>Terms matched: #{count} - URL: #{href}</em></p>`;
