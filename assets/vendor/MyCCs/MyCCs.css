@@ -25,6 +25,9 @@
 .MyCC-search {
     background-color: rgba(00, 255, 0, 0.44);
 }
+.MyCC-search-error {
+    background-color: rgba(255, 0, 0, 0.44);
+}
 .MyCC-search-list {
     list-style-type: none;
 }
