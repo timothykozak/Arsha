@@ -46,12 +46,12 @@
 //
 //  In the returned html the following classes are automatically
 //  inserted without being defined:
-//      search
-//      search-results
-//      search-quick-result
-//      search-list-item
-//      search-list-item-all
-//      search-error
+//      MyCC-search
+//      MyCC-search-results
+//      MyCC-search-quick-result
+//      MyCC-search-list-item
+//      MyCC-search-list-item-all
+//      MyCC-search-error
 //
 // This code was originally part of a download of the Charia template
 // from monsterone.com.
@@ -188,7 +188,7 @@ if ($file_count > 0) {
         }
 
         if ($match_count == 0) {
-            echo '<li><div class="search-error">No results found for "<span class="search">' . $search_term . '</span>"<div/></li>';
+            echo '<li><div class="MyCC-search-error">No results found for "<span class="MyCC-search">' . $search_term . '</span>"<div/></li>';
         }
         ?>
     </ol>
