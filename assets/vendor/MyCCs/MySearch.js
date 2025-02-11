@@ -21,9 +21,9 @@ function getResult() {
   let filter = '*.html';
   let searchDir = '../../..';   // Need to go up three directories to get to the root
                                       // because of the location of MySearch.php
-  let template = `<h5 class="search-title"><a target="_top" href="#{href}" class="search-link">#{title}</a></h5>
+  let template = `<h5 class="MyCC-search-title"><a target="_top" href="#{href}" class="search-link">#{title}</a></h5>
                         <p>...#{token}...</p>
-                        <p class="match"><em>Terms matched: #{count} - URL: #{href}</em></p>`;
+                        <p class="MyCC-match"><em>Terms matched: #{count} - URL: #{href}</em></p>`;
 
 
   request.append( 'template', template );
