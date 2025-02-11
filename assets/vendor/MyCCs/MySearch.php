@@ -43,10 +43,6 @@
 //          of this file.  Subdirectories are searched if
 //          $recursive is true.
 //      filter - file types to search, typically *.html
-//      livesearch - set to nonNull if this is a constantly
-//          updated (live) search
-//      livecount - limit on number of files matched in a
-//          live search
 //
 //  In the returned html the following classes are automatically
 //  inserted without being defined:
@@ -87,6 +83,7 @@ $final_result = array();
 
 $search_filter_init = $_GET['filter'];
 $search_filter = preg_replace("/\*/", ".*", $search_filter_init);
+
 $search_template = preg_replace('/\+/', ' ', $_GET['template']);
 preg_match_all("/\#\{((?!title|href|token|count)[a-z]*)\}/", $search_template, $template_tokens);
 $template_tokens = $template_tokens[1];
@@ -136,7 +133,7 @@ foreach ($files as $file) {
 
             $pos_start = $pos - $side_chars;
             $str = substr($clean_content, $pos_start, $pos_end);
-            $result = preg_replace('/' . $search_term . '/ui', '<span class="search">\0</span>', $str);
+            $result = preg_replace('/' . $search_term . '/ui', '<span class="MyCC-search">\0</span>', $str);
             $final_result[$file_count]['search_result'][] = $result;
 
         }
